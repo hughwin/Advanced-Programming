@@ -1,5 +1,5 @@
 
-public class Mono implements CipherInterface {
+public class Mono extends Cipher implements CipherInterface{
 	// alp is the cipher array
 	private char[] alp = new char[26];
 	/*
@@ -97,7 +97,7 @@ public class Mono implements CipherInterface {
 	 * Method to check the keyword for repeating
 	 * characters and make sure it's just A-Z values
 	 */
-	public boolean checkKeyword(String keyword) {
+	private boolean checkKeyword(String keyword) {
 		// check for repeated characters
 		for(int i=0;i<keyword.length()-1;i++) {
 			// Check this char is between A and Z

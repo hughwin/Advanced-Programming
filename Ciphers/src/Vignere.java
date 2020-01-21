@@ -1,5 +1,5 @@
 
-public class Vignere implements CipherInterface{
+public class Vignere extends Cipher implements CipherInterface{
 	private char[][] alp; // cipher array
 	private int rowPos; // which row are we currently using for encode / decode
 	public Vignere(String keyword) throws BadKeywordException{

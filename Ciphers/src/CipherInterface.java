@@ -1,11 +1,13 @@
 
 public interface CipherInterface {
 	
-	public char encode(char in);
+	char encode(char in);
 	
-	public char decode(char in);
+	char decode(char in);
 
-	public String encode(String in);
+	String encode(String in);
+
+	String  decode(String in);
 
 	
 }
