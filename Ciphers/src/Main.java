@@ -16,15 +16,16 @@ public class Main {
 		
 		ciphers.add(c);
 		ciphers.add(d);
+
 	
 		
 		
 		
 		for (CipherInterface x : ciphers) {
 			output = "";
-			for (int i = 0; i < message.length(); i++) {
-				output += x.encode(message.charAt(i));
-			}
+
+				output += x.encode(message);
+
 			System.out.println(output);
 		}
 }
