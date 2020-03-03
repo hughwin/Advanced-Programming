@@ -1,12 +1,11 @@
 package server;
 
 import javax.imageio.IIOException;
-import java.io.DataInput;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Server implements Runnable {
@@ -32,14 +31,26 @@ public class Server implements Runnable {
                 File file = new File("Labbook3/src/server/quotes.txt");
                 Scanner textInput = new Scanner(file);
 
+                ArrayList<String> quotes = new ArrayList<>();
+
+                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+
+
                 while (textInput.hasNextLine()) {
                     String line = textInput.nextLine();
+                    quotes.add(line);
+
                     if (line.equals("END")) {
                         break;
                     }
-                    os.write(line + "\n");
-                    os.flush();
                 }
+
+                Random rand = new Random();
+                String randomQuote = quotes.get(rand.nextInt(quotes.size()));
+                writer.write(randomQuote);
+                writer.write("\n" + "Something else");
+                writer.flush();
+
                 textInput.close();
                 client.close();
                 listener.close();
