@@ -33,7 +33,7 @@ public class Server implements Runnable {
 
                 ArrayList<String> quotes = new ArrayList<>();
 
-                PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+                PrintWriter writer = new PrintWriter(client.getOutputStream(), false);
 
 
                 while (textInput.hasNextLine()) {
@@ -45,16 +45,21 @@ public class Server implements Runnable {
                     }
                 }
 
-                Random rand = new Random();
-                String randomQuote = quotes.get(rand.nextInt(quotes.size()));
-                writer.write(randomQuote);
-                writer.write("\n" + "Something else");
-                writer.flush();
+                while(true) {
+                    Random rand = new Random();
+                    String randomQuote = quotes.get(rand.nextInt(quotes.size()));
+                    writer.write(randomQuote +"\n");
 
-                textInput.close();
-                client.close();
-                listener.close();
-            }catch (IOException e){
+                    writer.flush();
+
+                    textInput.close();
+
+                    Thread.sleep(2000);
+
+                }
+
+
+            }catch (IOException | InterruptedException e){
                 e.printStackTrace();
             }
         }
