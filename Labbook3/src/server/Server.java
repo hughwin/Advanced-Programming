@@ -1,9 +1,12 @@
 package server;
 
-import java.io.DataInput;
-import java.io.OutputStreamWriter;
+import javax.imageio.IIOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Server implements Runnable {
     private static int PORT = 1234;
@@ -14,18 +17,49 @@ public class Server implements Runnable {
     @Override
     public void run() {
         while(true){
-            try{ ServerSocket listener = new ServerSocket(PORT);
-                Socket client = listener.accept();
+            ServerSocket listener = null;
+            Socket client = null;
+
+            try {
+                listener = new ServerSocket(PORT);
+                client = listener.accept();
                 System.out.println("Client has arrived");
 
                 OutputStreamWriter os = new OutputStreamWriter(client.getOutputStream());
 
-                os.write('x');
-                os.flush();
 
-                client.close();
-                listener.close();
-            } catch(Exception e){
+                File file = new File("Labbook3/src/server/quotes.txt");
+                Scanner textInput = new Scanner(file);
+
+                ArrayList<String> quotes = new ArrayList<>();
+
+                PrintWriter writer = new PrintWriter(client.getOutputStream(), false);
+
+
+                while (textInput.hasNextLine()) {
+                    String line = textInput.nextLine();
+                    quotes.add(line);
+
+                    if (line.equals("END")) {
+                        break;
+                    }
+                }
+
+                while(true) {
+                    Random rand = new Random();
+                    String randomQuote = quotes.get(rand.nextInt(quotes.size()));
+                    writer.write(randomQuote +"\n");
+
+                    writer.flush();
+
+                    textInput.close();
+
+                    Thread.sleep(2000);
+
+                }
+
+
+            }catch (IOException | InterruptedException e){
                 e.printStackTrace();
             }
         }
