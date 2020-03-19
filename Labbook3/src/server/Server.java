@@ -10,56 +10,29 @@ import java.util.Scanner;
 
 public class Server implements Runnable {
     private static int PORT = 1234;
+
     public Server() {
 
     }
+
     @SuppressWarnings("InfiniteLoopStatement")
     @Override
     public void run() {
-        while(true){
+        while (true) {
             ServerSocket listener = null;
             Socket client = null;
 
             try {
                 listener = new ServerSocket(PORT);
-                client = listener.accept();
+                try {
+                    new ClientHandler(listener.accept()).start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("Client has arrived");
 
-                OutputStreamWriter os = new OutputStreamWriter(client.getOutputStream());
 
-
-                File file = new File("Labbook3/src/server/quotes.txt");
-                Scanner textInput = new Scanner(file);
-
-                ArrayList<String> quotes = new ArrayList<>();
-
-                PrintWriter writer = new PrintWriter(client.getOutputStream(), false);
-
-
-                while (textInput.hasNextLine()) {
-                    String line = textInput.nextLine();
-                    quotes.add(line);
-
-                    if (line.equals("END")) {
-                        break;
-                    }
-                }
-
-                while(true) {
-                    Random rand = new Random();
-                    String randomQuote = quotes.get(rand.nextInt(quotes.size()));
-                    writer.write(randomQuote +"\n");
-
-                    writer.flush();
-
-                    textInput.close();
-
-                    Thread.sleep(2000);
-
-                }
-
-
-            }catch (IOException | InterruptedException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
