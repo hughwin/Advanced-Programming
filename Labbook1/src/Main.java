@@ -6,11 +6,11 @@ public class Main {
 
 		String keyword = "RHINO";
 
-		ArrayList<CipherInterface> ciphers = new ArrayList<CipherInterface>();
-		ArrayList<Cipher> ciphersAbstract = new ArrayList<Cipher>();
+		ArrayList<CipherInterface> ciphers = new ArrayList<>();
+		ArrayList<Cipher> ciphersAbstract = new ArrayList<>();
 
 		String message = "THIS IS A MESSAGE TO ENCODE";
-		String output = "";
+		String output;
 		
 		Mono c = new Mono(keyword);
 		Vignere d = new Vignere(keyword);
@@ -40,6 +40,19 @@ public class Main {
 
 			System.out.println(output);
 		}
+
+		Person hugh = new Person("Hugh");
+		Business amazon = new Business("Amazon");
+		Phone hughPhone = new Phone("999");
+		Address amazonAddress = new Address("Seattle, Washington, United States");
+
+		Dictionary<Person, Addressable> phonebook = new Dictionary<>();
+		phonebook.add(hugh, hughPhone);
+		phonebook.add(amazon, amazonAddress);
+		// Dictionary will probably run into trouble if identical keys entered, but
+		// is fine for the purposes of this exercise.
+		System.out.println(phonebook.toString());
+
 
 }
 }
