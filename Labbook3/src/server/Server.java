@@ -1,31 +1,38 @@
 package server;
 
-import java.io.DataInput;
-import java.io.OutputStreamWriter;
+import javax.imageio.IIOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Server implements Runnable {
     private static int PORT = 1234;
+
     public Server() {
 
     }
+
     @SuppressWarnings("InfiniteLoopStatement")
     @Override
     public void run() {
-        while(true){
-            try{ ServerSocket listener = new ServerSocket(PORT);
-                Socket client = listener.accept();
+        while (true) {
+            ServerSocket listener = null;
+            Socket client = null;
+
+            try {
+                listener = new ServerSocket(PORT);
+                try {
+                    new ClientHandler(listener.accept()).start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("Client has arrived");
 
-                OutputStreamWriter os = new OutputStreamWriter(client.getOutputStream());
 
-                os.write('x');
-                os.flush();
-
-                client.close();
-                listener.close();
-            } catch(Exception e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
