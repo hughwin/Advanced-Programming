@@ -3,6 +3,7 @@ import java.util.Random;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
+@SuppressWarnings("ALL")
 public class RandoArray implements Iterable{
 
     private final double[] array;
@@ -27,7 +28,6 @@ public class RandoArray implements Iterable{
             @Override
             public Object next() {
                 index+= 1;
-                System.out.println(index);
                 return array[index];
             }
         };
