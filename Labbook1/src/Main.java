@@ -1,4 +1,6 @@
+import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Main {
 
@@ -52,6 +54,14 @@ public class Main {
 		// Dictionary will probably run into trouble if identical keys entered, but
 		// is fine for the purposes of this exercise.
 		System.out.println(phonebook.toString());
+
+		RandoArray randoArray = new RandoArray(10);
+
+		Iterator randoArrayIterator = randoArray.iterator();
+
+		while (randoArrayIterator.hasNext()){
+			System.out.println(randoArrayIterator.next());
+		}
 
 
 }
